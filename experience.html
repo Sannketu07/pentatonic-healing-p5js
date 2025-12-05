@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Space - Experience</title>
+    
+    <!-- Load p5.js libraries -->
+    <script language="javascript" type="text/javascript" src="assets/js/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
+    
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Get element type from URL parameter and store in window object
+        const urlParams = new URLSearchParams(window.location.search);
+        window.selectedElement = urlParams.get('element') || 'tu';
+        
+        console.log('Loading element:', window.selectedElement);
+        
+        // Load the unified main.js file (NOT main_element.js)
+        const script = document.createElement('script');
+        script.src = 'assets/js/main.js';  // ← Changed to unified main.js
+        script.type = 'text/javascript';
+        
+        // Error handling
+        script.onerror = function() {
+            console.error('Failed to load: assets/js/main.js');
+            document.body.innerHTML = `
+                <div style="color: white; text-align: center; padding-top: 100px; font-family: sans-serif;">
+                    <h2>Loading Failed</h2>
+                    <p>Could not load file: assets/js/main.js</p>
+                    <p><a href="index.html" style="color: #4A90E2;">Back to Home</a></p>
+                </div>
+            `;
+        };
+        
+        script.onload = function() {
+            console.log('Main.js loaded successfully for element:', window.selectedElement);
+        };
+        
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
